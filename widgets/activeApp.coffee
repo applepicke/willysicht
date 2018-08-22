@@ -1,6 +1,6 @@
 command: "sh ./scripts/getActiveApp.sh"
 
-refreshFrequency: 1000
+refreshFrequency: 200
 
 render: (output) ->
   """
