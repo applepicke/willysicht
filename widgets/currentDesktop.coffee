@@ -1,4 +1,4 @@
-command: "echo $(x=$(/opt/local/bin/chunkc tiling::query -d id);echo $(/opt/local/bin/chunkc tiling::query -D $(/opt/local/bin/chunkc tiling::query -m id))\",$x\")"
+command: "echo $(x=$(/usr/local/bin/chunkc tiling::query -d id);echo $(/usr/local/bin/chunkc tiling::query -D $(/usr/local/bin/chunkc tiling::query -m id))\",$x\")"
 
 refreshFrequency: 1000
 
@@ -12,13 +12,7 @@ render: (output) ->
   """
 
   for i in [0..spaces.length - 1]
-    icon = ""
-    switch spaces[i]
-        when '1' then icon = "./assets/icons/code.svg"
-        when '2' then icon = "./assets/icons/system-file-manager-symbolic.svg"
-        when '3' then icon = "./assets/icons/firefox-symbolic.svg"
-        when '5' then icon = "./assets/icons/multimedia-audio-player.svg"
-        else icon = "./assets/icons/utilities-terminal-symbolic.svg"
+    icon = "./assets/icons/utilities-terminal-symbolic.svg"
     htmlString += "<li id=\"desktop#{spaces[i]}\"><img src=\"#{icon}\" /></li>"
 
   htmlString += """
@@ -58,13 +52,7 @@ update: (output, domEl) ->
 
   htmlString = ""
   for i in [0..spaces.length - 1]
-    icon = ""
-    switch spaces[i]
-        when '1' then icon = "./assets/icons/code.svg"
-        when '2' then icon = "./assets/icons/system-file-manager-symbolic.svg"
-        when '3' then icon = "./assets/icons/firefox-symbolic.svg"
-        when '5' then icon = "./assets/icons/multimedia-audio-player.svg"
-        else icon = "./assets/icons/utilities-terminal-symbolic.svg"
+    icon = "./assets/icons/utilities-terminal-symbolic.svg"
     htmlString += "<li id=\"desktop#{spaces[i]}\"><img src=\"#{icon}\" /></li>"
 
   if ($(domEl).find('.currentDesktop-container').attr('data-count') != spaces.length.toString())
