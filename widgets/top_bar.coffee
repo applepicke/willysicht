@@ -1,27 +1,40 @@
-command: "sh ./scripts/status.sh"
+command: "sh ./scripts/top_bar/top_bar.sh"
 
 refreshFrequency: 10000 # ms
 
 render: (output) ->
   """
-    <div class="compstatus"></div>
+    <div>
+      <div class="compstatus"></div>
+    </div>
   """
 
 style: """
-  right: 18px
-  top: 5px
-  height: 13
-  .wifi
-    font: 14px FontAwesome
-    top: 1px
-    position: relative
-    left: 10px
-  .charging
-    font: 12px FontAwesome
-    position: relative
-    top: 0px
-    right: -11px
-    z-index: 1
+  background-color: #2d2d2d;
+  width: 100%;
+  top: 0px;
+  right: 0px;
+  left 0px;
+  height: 28px
+  box-shadow: 5px 5px 5px 0px rgba(0,0,0,0.40);
+  z-index: -1
+
+  .compstatus
+    position: absolute
+    right: 18px
+    top: 5px
+    height: 13
+    .wifi
+      font: 14px FontAwesome
+      top: 1px
+      position: relative
+      left: 10px
+    .charging
+      font: 12px FontAwesome
+      position: relative
+      top: 0px
+      right: -11px
+      z-index: 1
   """
 timeAndDate: (date, time) ->
   # returns a formatted html string with the date and time

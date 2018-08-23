@@ -1,4 +1,4 @@
 #!/usr/bin/bash
 
-date "+%l:%m %p"
+date "+%l:%M %p"
 # @$(date +%d%b%y)
