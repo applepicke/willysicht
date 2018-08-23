@@ -24,11 +24,7 @@ style: """
     right: 18px
     top: 5px
     height: 13
-    .wifi
-      font: 14px FontAwesome
-      top: 1px
-      position: relative
-      left: 10px
+
     .charging
       font: 12px FontAwesome
       position: relative
@@ -38,49 +34,105 @@ style: """
   """
 timeAndDate: (date, time) ->
   # returns a formatted html string with the date and time
-  return "<span class='white'><span class='icon'>&nbsp&nbsp;</span>#{date}&nbsp<span> ⎢ </span><span class='icon'>&nbsp;</span>#{time}</span></span>";
+  return """
+    <i class='icon-calendar blue' />
+    <span class='white'>#{date} ⎢ </span>
+    <i class='icon-clock orange' />
+    <span class='white'>#{time}</span>
+  """
 
 batteryStatus: (battery, state) ->
   #returns a formatted html string current battery percentage, a representative icon and adds a lighting bolt if the
   # battery is plugged in and charging
+  icon = ''
 
   # If no battery exists, battery is only '%' character
   if state == 'AC' and battery == "%"
-    return "<span class='green icon'></span>"
+    return """
+      <i class='icon-battery-plug2 green'>
+    """
 
   batnum = parseInt(battery)
   if state == 'AC' and batnum >= 90
-    return "<span class='charging white sicon'></span><span class='green icon '></span>&nbsp;<span class='white'>#{batnum}%</span>"
-  else if state == 'AC' and batnum >= 50 and batnum < 90
-    return "<span class='charging white icon'></span><span class='green icon'></span>&nbsp;<span class='white'>#{batnum}%</span>"
-  else if state == 'AC' and batnum < 50 and batnum >= 15
-    return "<span class='charging white icon'></span><span class='yellow icon'></span>&nbsp;<span class='white'>#{batnum}%</span>"
-  else if state == 'AC' and batnum < 15
-    return "<span class='charging white icon'></span><span class='red icon'></span>&nbsp;<span class='white'>#{batnum}%</span>"
+    icon = "<i class='icon-battery-plug-90 green'>"
+  else if state == 'AC' and batnum >= 75 and batnum < 90
+    icon = "<i class='icon-battery-plug-75 green'>"
+  else if state == 'AC' and batnum >= 60 and batnum < 75
+    icon = "<i class='icon-battery-plug-60 green'>"
+  else if state == 'AC' and batnum >= 50 and batnum < 60
+    icon = "<i class='icon-battery-plug-50 green'>"
+  else if state == 'AC' and batnum >= 40 and batnum < 50
+    icon = "<i class='icon-battery-plug-40 green'>"
+  else if state == 'AC' and batnum >= 25 and batnum < 40
+    icon = "<i class='icon-battery-plug-25 green'>"
+  else if state == 'AC' and batnum >= 10 and batnum < 25
+    icon = "<i class='icon-battery-plug-10 green'>"
+  else if state == 'AC' and batnum < 10
+    icon = "<i class='icon-battery-plug2 green'>"
   else if batnum >= 90
-    return "<span class='green icon'>&nbsp</span>&nbsp;<span class='white'>#{batnum}%</span>"
-  else if batnum >= 50 and batnum < 90
-    return "<span class='green icon'>&nbsp</span>&nbsp;<span class='white'>#{batnum}%</span>"
-  else if batnum < 50 and batnum >= 25
-    return "<span class='yellow icon'>&nbsp</span>&nbsp;<span class='white'>#{batnum}%</span>"
-  else if batnum < 25 and batnum >= 15
-    return "<span class='yellow icon'>&nbsp</span>&nbsp;<span class='white'>#{batnum}%</span>"
-  else if batnum < 15
-    return "<span class='red icon'>&nbsp</span>&nbsp;<span class='white'>#{batnum}%</span>"
+    icon = "<i class='icon-battery-90 green'>"
+  else if batnum >= 75 and batnum < 90
+    icon = "<i class='icon-battery-75 green'>"
+  else if batnum >= 60 and batnum < 75
+    icon = "<i class='icon-battery-60 green'>"
+  else if batnum >= 50 and batnum < 60
+    icon = "<i class='icon-battery-50 green'>"
+  else if batnum >= 40 and batnum < 50
+    icon = "<i class='icon-battery-40 green'>"
+  else if batnum >= 25 and batnum < 40
+    icon = "<i class='icon-battery-25 green'>"
+  else if batnum >= 10 and batnum < 25
+    icon = "<i class='icon-battery-10 green'>"
+  else if batnum < 10
+    icon = "<i class='icon-battery-empty green'>"
+
+  return """
+    #{icon}
+    <span class='white'>#{batnum}%</span>
+  """
 
 getWifiStatus: (status, netName, netIP) ->
   if status == "Wi-Fi"
-    return "<span class='wifi '>&nbsp&nbsp&nbsp&nbsp;</span><span class='white'>#{netName}&nbsp</span>"
+    return """
+      &nbsp;
+      <i class='icon-wifi-100 brown' />
+      <span class='white'>#{netName}</span>
+    """
+
   if status == 'USB 10/100/1000 LAN' or status == 'Apple USB Ethernet Adapter'
-    return "<span class='wifi '>&nbsp&nbsp&nbsp&nbsp;</span><span class='white'>#{netIP}</span>"
+    return """
+      <i class='icon-network2 brown' />
+      <span class='white'>#{netIP}</span>
+    """
   else
-    return "<span class='grey wifi'>&nbsp&nbsp&nbsp</span><span class='white'>--&nbsp&nbsp&nbsp</span>"
+    return """
+      <i class='icon-wifi-cross grey' />
+      <span class='white'>--</span>
+    """
 
 getVolume: (str) ->
-  if str == "muted"
-    return "<span class='volume'>&nbsp;&nbsp;</span>"
+  vol = parseInt(str)
+
+  if vol >= 0 && vol <= 25
+    vol = 25
+  else if vol > 25 && vol <= 50
+    vol = 50
+  else if vol > 50 && vol <= 75
+    vol = 75
+  else if vol > 75 <= 100
+    vol = 100
+
+  if str.trim() == "muted"
+    return """
+      <i class='icon-volume-cross brown' />
+      <span class='white'>muted</span>
+      &nbsp;
+    """
   else
-    return "<span class='volume'>&nbsp;&nbsp;</span><span class='white'>#{str}&nbsp</span>"
+    return """
+      <i class='icon-volume-#{vol} brown' />
+      <span class='white'>#{str}&nbsp</span>
+    """
 
 update: (output, domEl) ->
 

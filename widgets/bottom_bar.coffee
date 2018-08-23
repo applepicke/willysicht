@@ -27,6 +27,20 @@ style: """
     padding-top: 2px
 """
 
+getMem: (mem) ->
+  memNum = parseFloat(mem)
+  memNum = memNum.toFixed(1)
+  memString = String(memNum)
+
+  if memNum < 10
+    memString = '0' + memString
+
+  return """
+    <i class='icon-microsd brown' />
+    &nbsp;
+    <span class='white'>#{memString}%</span>
+  """
+
 getCPU: (cpu) ->
   cpuNum = parseFloat(cpu)
 
@@ -38,17 +52,11 @@ getCPU: (cpu) ->
   if cpuNum < 10
     cpuString = '0' + cpuString
 
-  return "<span class='icon'>&nbsp&nbsp;</span>" +
-         "<span class='white'>#{cpuString}%</span>"
-
-getMem: (mem) ->
-  memNum = parseFloat(mem)
-  memNum = memNum.toFixed(1)
-  memString = String(memNum)
-  if memNum < 10
-    memString = '0' + memString
-  return "<span class='icon'>&nbsp&nbsp;</span>" +
-         "<span class='white'>#{memString}%</span>"
+  return """
+    <i class='icon-cpu brown' />
+    &nbsp;
+    <span class='white'>#{cpuString}%</span>
+  """
 
 convertBytes: (bytes) ->
   kb = bytes / 1024
@@ -65,16 +73,27 @@ getNetTraffic: (down, up) ->
   upString = @convertBytes(parseInt(up || 0))
   return """
     <div>
-      <span class='icon blue'>  </span>
+      <i class='icon-arrow-down-circle blue' />
       <span class='white'>#{downString}</span>
       <span>⎢</span>
-      <span class='icon orange'></span>
+      <i class='icon-arrow-up-circle orange' />
       <span class='white'>#{upString}</span>
     </div>
   """
 
 getFreeSpace: (space) ->
-  return "<span class='icon'></span>&nbsp;<span class='white'>#{space}gb</span>"
+  return """
+    <i class='icon-floppy-disk brown' />
+    &nbsp;
+    <span class='white'>#{space}GB</span>
+  """
+
+getKubernetesContext: (context) ->
+  return """
+    <i class='icon-helm blue' />
+    &nbsp;
+    <span class='white'>#{context}</span>
+  """
 
 update: (output, domEl) ->
 
@@ -86,6 +105,7 @@ update: (output, domEl) ->
   down = values[2]
   up   = values[3]
   free = values[4].replace(/[^0-9]/g,'')
+  kubernetesContext = values[5]
 
   # create an HTML string to be displayed by the widget
   htmlString = """
@@ -96,6 +116,8 @@ update: (output, domEl) ->
     #{@getCPU(cpu)}
     <span>&nbsp⎢&nbsp</span>
     #{@getFreeSpace(free)}
+    <span>&nbsp⎢&nbsp</span>
+    #{@getKubernetesContext(kubernetesContext)}
   """
 
   $(domEl).find('.stats').html(htmlString)

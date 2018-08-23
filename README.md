@@ -8,14 +8,9 @@
 - Get Übersicht here http://tracesof.net/uebersicht/
 - Change your Übersicht theme folder to this `/widgets` directory
 
-### Spotify
+### Lindua
 
-- [shpotify](https://github.com/hnarayanan/shpotify).
-- Place the spotify script into `/usr/local/bin/`
-
-### FontAwesome
-
-- Install `/fonts/FontAweseome.otf`
+- Install Lindua as a system font ($$$, sorry)
 
 ## Credits
 

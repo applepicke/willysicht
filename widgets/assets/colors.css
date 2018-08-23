@@ -4,8 +4,13 @@ table, span {
     font-weight: 600;
     -webkit-font-smoothing: antialiased;
 }
+
+.brown {
+  color: #876769
+}
+
 .white {
-    color: #a5a5a5;
+  color: #a5a5a5;
 }
 
 .black {
